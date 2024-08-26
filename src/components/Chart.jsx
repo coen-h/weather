@@ -13,33 +13,19 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export default function Chart() {
-  const [weather, setWeather] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "https://api.open-meteo.com/v1/forecast?latitude=-36.8485&longitude=174.7635&hourly=temperature_2m"
-      );
-      const data = await response.json();
-      setWeather(data.hourly);
-      console.log(data);
-    };
-    fetchData();
-  }, []);
-
+export default function Chart(props) {
   const renderGraph = () => {
-    if (!weather) {
+    if (!props.weather) {
       return <p>Loading...</p>;
     }
 
-    const labels = weather.time.map((time) => new Date(time).toLocaleTimeString());
+    const labels = props.weather.time.map((time) => new Date(time).toLocaleTimeString());
     const chartData = {
       labels,
       datasets: [
         {
           label: "Temperature (°C)",
-          data: weather.temperature_2m,
+          data: props.weather.temperature_2m,
           borderColor: "rgba(75, 192, 192, 1)",
           backgroundColor: "rgba(75, 192, 192, 0.2)",
         },
