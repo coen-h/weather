@@ -10,7 +10,7 @@ export default function Home() {
     useEffect(() => {
       const fetchData = async () => {
         const response = await fetch(
-          "https://api.open-meteo.com/v1/forecast?latitude=-36.8485&longitude=174.7635&hourly=temperature_2m,relative_humidity_2m,weather_code,windspeed_10m,pressure_msl"
+          "https://api.open-meteo.com/v1/forecast?latitude=-36.8485&longitude=174.7635&hourly=temperature_2m,relative_humidity_2m,weather_code,windspeed_10m,pressure_msl,visibility"
         );
         const data = await response.json();
         setWeather(data.hourly);
@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen p-6">
-      <div className="flex w-full h-full bg-slate-200 drop-shadow-md rounded-lg">
+      <div className="flex w-full h-full justify-between bg-slate-200 drop-shadow-md rounded-lg">
         <Main weather={weather} />
         <div className="flex flex-col">
           <Timeline weather={weather} />
@@ -32,5 +32,3 @@ export default function Home() {
     </div>
   );
 }
-{/* https://open-meteo.com/en/docs */}
-{/* https://www.creative-tim.com/twcomponents/cheatsheet */}

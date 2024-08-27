@@ -19,13 +19,16 @@ export default function Chart(props) {
       return <p>Loading...</p>;
     }
 
-    const labels = props.weather.time.map((time) => new Date(time).toLocaleTimeString());
+    const labels = props.weather.time
+      .filter((_, index) => index % 24 === 0)
+      .map((time) => new Date(time).toLocaleDateString('en-US', { weekday: 'long' }));
+
     const chartData = {
       labels,
       datasets: [
         {
           label: "Temperature (°C)",
-          data: props.weather.temperature_2m,
+          data: props.weather.temperature_2m.filter((_, index) => index % 24 === 0),
           borderColor: "rgba(75, 192, 192, 1)",
           backgroundColor: "rgba(75, 192, 192, 0.2)",
         },
@@ -37,13 +40,13 @@ export default function Chart(props) {
         y: {
           beginAtZero: true,
           title: {
-            display: true,
+            display: false,
             text: "Temperature (°C)",
           },
         },
         x: {
           title: {
-            display: true,
+            display: false,
             text: "Time",
           },
         },
